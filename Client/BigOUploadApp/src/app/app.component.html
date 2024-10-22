@@ -1,0 +1,30 @@
+
+
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      
+      
+      <p>Tus File Upload running. 🎉</p>
+      <h3>Tus File Upload Client Example</h3>
+<input accept="/*" name="file" type="file" #file
+             multiple>
+<button mat-raised-button (click)="upload(file.files);">Upload</button>
+<div *ngFor="let fileStatus of uploadProgress | async">
+      <p>Uploading File: {{fileStatus.filename}}</p>
+      <progress color="primary" mode="determinate"
+                        [value]="fileStatus.progress"></progress>
+      <p>Progress: {{fileStatus.progress}}%</p>
+      <p>UUID: {{fileStatus.uuid}}</p>
+      <div *ngIf="fileStatus.progress == 100">
+        <!-- <a href="https://master.tus.io/files/{{fileStatus.uuid}}">Uploaded File</a> -->
+      </div>
+</div>
+    </div>
+   
+  </div>
+</main>
+
+
+
+<router-outlet />

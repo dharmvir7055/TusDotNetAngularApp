@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import {Upload} from 'tus-js-client';
 export interface FileStatus{
   filename:string;
+  filesize:string;
   progress:number;
   hash:string;
   uuid:string;
@@ -19,13 +20,13 @@ export class UploadService {
 
   fileStatusArr:FileStatus[]=[];
   uploadFile(file:File,filename:string){
-    const fileStatus:FileStatus={filename,progress:0,hash:'',uuid:''};
+    const fileStatus:FileStatus={filename,filesize:(file.size/(1024 * 1024)).toFixed(2)+"MB",progress:0,hash:'',uuid:''};
     this.fileStatusArr.push(fileStatus);
     this.uploadStatus.next(this.fileStatusArr);
     const upload=new Upload(file,{
       endpoint: "https://localhost:5050/files/",
       retryDelays: [0, 3000, 6000, 12000, 24000],
-      chunkSize: 20000,
+      chunkSize: 10 * 1024 * 1024,//10 mb
       metadata: {
         filename,
         filetype: file.type

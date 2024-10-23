@@ -12,8 +12,10 @@
 <button mat-raised-button (click)="upload(file.files);">Upload</button>
 <div *ngFor="let fileStatus of uploadProgress | async">
       <p>Uploading File: {{fileStatus.filename}}</p>
+      <p>File Size: {{fileStatus.filesize}}</p>
+
       <progress color="primary" mode="determinate"
-                        [value]="fileStatus.progress"></progress>
+                        [value]="fileStatus.progress" max="100" ></progress>
       <p>Progress: {{fileStatus.progress}}%</p>
       <p>UUID: {{fileStatus.uuid}}</p>
       <div *ngIf="fileStatus.progress == 100">
